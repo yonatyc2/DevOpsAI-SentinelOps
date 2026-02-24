@@ -1,0 +1,121 @@
+{
+  "groups": [
+    {
+      "name": "encryption",
+      "type": "com.sentinelops.config.EncryptionProperties",
+      "sourceType": "com.sentinelops.config.EncryptionProperties"
+    },
+    {
+      "name": "openai",
+      "type": "com.sentinelops.config.OpenAiProperties",
+      "sourceType": "com.sentinelops.config.OpenAiProperties"
+    },
+    {
+      "name": "postgres",
+      "type": "com.sentinelops.config.PostgresProperties",
+      "sourceType": "com.sentinelops.config.PostgresProperties"
+    },
+    {
+      "name": "ssh",
+      "type": "com.sentinelops.config.SshProperties",
+      "sourceType": "com.sentinelops.config.SshProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "encryption.secret",
+      "type": "java.lang.String",
+      "description": "Base64 or raw secret used to derive AES key (min 16 chars recommended).",
+      "sourceType": "com.sentinelops.config.EncryptionProperties",
+      "defaultValue": "sentinelops-default-change-in-production"
+    },
+    {
+      "name": "openai.api-key",
+      "type": "java.lang.String",
+      "sourceType": "com.sentinelops.config.OpenAiProperties"
+    },
+    {
+      "name": "openai.base-url",
+      "type": "java.lang.String",
+      "sourceType": "com.sentinelops.config.OpenAiProperties",
+      "defaultValue": "https:\/\/api.openai.com"
+    },
+    {
+      "name": "openai.model",
+      "type": "java.lang.String",
+      "sourceType": "com.sentinelops.config.OpenAiProperties",
+      "defaultValue": "gpt-4o-mini"
+    },
+    {
+      "name": "postgres.database",
+      "type": "java.lang.String",
+      "sourceType": "com.sentinelops.config.PostgresProperties",
+      "defaultValue": "postgres"
+    },
+    {
+      "name": "postgres.enabled",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.sentinelops.config.PostgresProperties",
+      "defaultValue": false
+    },
+    {
+      "name": "postgres.host",
+      "type": "java.lang.String",
+      "sourceType": "com.sentinelops.config.PostgresProperties",
+      "defaultValue": "localhost"
+    },
+    {
+      "name": "postgres.port",
+      "type": "java.lang.Integer",
+      "sourceType": "com.sentinelops.config.PostgresProperties",
+      "defaultValue": 5432
+    },
+    {
+      "name": "postgres.user",
+      "type": "java.lang.String",
+      "sourceType": "com.sentinelops.config.PostgresProperties",
+      "defaultValue": "postgres"
+    },
+    {
+      "name": "ssh.command-timeout-ms",
+      "type": "java.lang.Integer",
+      "sourceType": "com.sentinelops.config.SshProperties",
+      "defaultValue": 30000
+    },
+    {
+      "name": "ssh.connect-timeout-ms",
+      "type": "java.lang.Integer",
+      "sourceType": "com.sentinelops.config.SshProperties",
+      "defaultValue": 10000
+    },
+    {
+      "name": "ssh.host",
+      "type": "java.lang.String",
+      "sourceType": "com.sentinelops.config.SshProperties",
+      "defaultValue": "localhost"
+    },
+    {
+      "name": "ssh.password",
+      "type": "java.lang.String",
+      "sourceType": "com.sentinelops.config.SshProperties"
+    },
+    {
+      "name": "ssh.port",
+      "type": "java.lang.Integer",
+      "sourceType": "com.sentinelops.config.SshProperties",
+      "defaultValue": 22
+    },
+    {
+      "name": "ssh.private-key-path",
+      "type": "java.lang.String",
+      "sourceType": "com.sentinelops.config.SshProperties"
+    },
+    {
+      "name": "ssh.username",
+      "type": "java.lang.String",
+      "sourceType": "com.sentinelops.config.SshProperties",
+      "defaultValue": "root"
+    }
+  ],
+  "hints": []
+}

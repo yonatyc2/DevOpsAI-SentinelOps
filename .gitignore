@@ -1,0 +1,5 @@
+# Stored server list (contains encrypted credentials)
+backend/data/servers.json
+# Seed file often contains plain passwords - do not commit if production
+backend/data/servers-seed.json
+backend/data/servers-seed.json.done

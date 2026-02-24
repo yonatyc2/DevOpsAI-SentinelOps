@@ -1,0 +1,140 @@
+TODO LIST
+
+PHASE 1 — Core Infrastructure (Week 1)
+Goals
+
+Project scaffolding
+
+SSH command execution
+
+Basic chat endpoint
+
+Connect to OpenAI
+
+Deliverables
+
+Spring Boot project
+
+React chat UI
+
+Basic AI prompt working
+
+TODO
+
+Backend:
+
+ Create Spring Boot project
+
+ Add SSH execution service
+
+ Add OpenAI integration
+
+ Create ChatController
+
+ Implement basic prompt template
+
+Frontend:
+
+ Create chat UI
+
+ Connect to backend
+
+ Display AI responses
+
+🟡 PHASE 2 — System Snapshot Engine (Week 2)
+Goals
+
+Structured data collection
+
+JSON conversion
+
+AI reasoning based on system state
+
+TODO
+
+Backend:
+
+ Implement LinuxSnapshotService
+
+ Implement DockerSnapshotService
+
+ Implement PostgresSnapshotService
+
+ Convert outputs to JSON models
+
+ Build AI structured prompt system
+
+Frontend:
+
+ Add system state panel
+
+ Show disk/memory usage indicators
+
+🟠 PHASE 3 — Safety Engine (Week 3)
+Goals
+
+Command validation
+
+Risk scoring
+
+Confirmation workflow
+
+TODO
+
+Backend:
+
+ Implement CommandRiskAnalyzer
+
+ Add confirmation endpoint
+
+ Log command history
+
+ Add rollback suggestions
+
+Frontend:
+
+ Add “Approve Command” modal
+
+ Show risk level (Low/Medium/High)
+
+🔵 PHASE 4 — Multi-Server Support (Week 4)
+Goals
+
+Manage multiple servers
+
+Store SSH credentials securely
+
+TODO
+
+Backend:
+
+ Create Server entity
+
+ Store encrypted SSH keys
+
+ Add server selection logic
+
+Frontend:
+
+ Add server dropdown
+
+ Show per-server health
+
+🟣 PHASE 5 — Intelligence & Analytics (Advanced)
+Goals
+
+Trend detection
+
+Disk growth prediction
+
+Restart loop detection
+
+TODO
+
+ Store historical snapshots
+
+ Implement anomaly detection
+
+ Add disk growth graph
+
+ Add memory leak detection

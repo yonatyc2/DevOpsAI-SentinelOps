@@ -1,0 +1,289 @@
+Specification document
+
+AI DevOps Assistant for Linux, Docker & PostgreSQL
+
+1️⃣ Executive Summary
+
+SentinelOps AI is an intelligent DevOps assistant that:
+
+Connects to Linux servers
+
+Analyzes Docker, LVM, disk, memory and PostgreSQL
+
+Detects issues
+
+Explains them in plain English
+
+Suggests safe remediation steps
+
+Optionally executes approved commands
+
+It acts as an AI SRE Copilot for infrastructure teams.
+
+2️⃣ Problem Statement
+
+Modern infrastructure environments suffer from:
+
+Disk mismanagement (LVM shrink risks, full disks)
+
+Docker restart loops
+
+PostgreSQL performance issues
+
+Complex debugging across logs
+
+Risky manual production commands
+
+There is no assistant that:
+
+Understands infrastructure state
+
+Reasons safely
+
+Prevents destructive commands
+
+Speaks DevOps language
+
+3️⃣ Product Goals
+Primary Goals
+
+Reduce downtime
+
+Improve troubleshooting speed
+
+Prevent catastrophic commands
+
+Provide structured AI reasoning
+
+Secondary Goals
+
+Historical incident tracking
+
+Multi-server monitoring
+
+Enterprise-ready SaaS
+
+4️⃣ Target Users
+
+DevOps Engineers
+
+SRE Teams
+
+Infrastructure Administrators
+
+Backend Engineers managing servers
+
+5️⃣ Core Features (MVP Scope)
+🔹 1. Chat Interface
+
+User types:
+
+“Why is /data almost full?”
+
+“Why is Docker restarting?”
+
+“Can I safely remove sdl?”
+
+“Why is Postgres slow?”
+
+System replies with:
+
+Analysis
+
+Root cause
+
+Safe action plan
+
+Risk warnings
+
+🔹 2. System Snapshot Engine
+
+Collect structured data:
+
+Linux
+
+df -h
+
+lsblk
+
+pvs, vgs, lvs
+
+free -m
+
+uptime
+
+systemctl status
+
+Docker
+
+docker ps
+
+docker inspect
+
+restart counts
+
+docker stats
+
+PostgreSQL
+
+pg_stat_activity
+
+database sizes
+
+slow queries
+
+locks
+
+Convert everything into structured JSON.
+
+🔹 3. AI Reasoning Engine
+
+LLM receives:
+
+{
+  "disk": {...},
+  "lvm": {...},
+  "docker": {...},
+  "postgres": {...}
+}
+
+
+And responds with:
+
+Diagnosis
+
+Confidence level
+
+Risk classification
+
+Step-by-step remediation
+
+🔹 4. Safe Command Mode
+
+Two modes:
+
+Safe Mode (Default)
+
+AI suggests commands only
+
+No execution
+
+Execute Mode
+
+User approves command
+
+Backend runs via SSH
+
+Logs execution
+
+Rollback suggestions generated
+
+🔹 5. Audit Log
+
+Store:
+
+System snapshots
+
+AI conversations
+
+Commands executed
+
+User confirmations
+
+6️⃣ Non-Functional Requirements
+
+Read-only by default
+
+Role-based command permissions
+
+Secure SSH key storage
+
+No destructive command execution without confirmation
+
+All actions logged
+
+7️⃣ Architecture
+Frontend
+
+React (Vite)
+
+Chat interface
+
+System dashboard
+
+Risk indicators
+
+Backend
+
+Spring Boot
+
+REST API
+
+SSH module
+
+Command Executor
+
+AI integration service
+
+Database
+
+PostgreSQL
+
+Store:
+
+Servers
+
+Snapshots
+
+Chat history
+
+Commands
+
+AI
+
+OpenAI API (initial)
+
+Later: Ollama local LLM
+
+8️⃣ System Modules
+1. Server Connector Module
+
+SSH connection
+
+Command execution
+
+Timeout management
+
+2. Snapshot Analyzer
+
+Runs commands
+
+Parses output
+
+Converts to structured model
+
+3. AI Engine
+
+Prompt templating
+
+Context builder
+
+Response validator
+
+Safety filter
+
+4. Risk Engine
+
+Detect dangerous commands:
+
+rm -rf
+
+lvreduce
+
+pvremove
+
+drop database
+
+Require extra approval
+
+9️⃣ PHASED DEVELOPMENT PLAN
