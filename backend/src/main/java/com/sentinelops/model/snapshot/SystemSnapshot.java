@@ -13,6 +13,7 @@ public class SystemSnapshot {
     private LinuxSnapshot linux;
     private DockerSnapshot docker;
     private PostgresSnapshot postgres;
+    private NginxSnapshot nginx;
 
     public Instant getTimestamp() { return timestamp; }
     public void setTimestamp(Instant timestamp) { this.timestamp = timestamp; }
@@ -22,4 +23,6 @@ public class SystemSnapshot {
     public void setDocker(DockerSnapshot docker) { this.docker = docker; }
     public PostgresSnapshot getPostgres() { return postgres; }
     public void setPostgres(PostgresSnapshot postgres) { this.postgres = postgres; }
+    public NginxSnapshot getNginx() { return nginx; }
+    public void setNginx(NginxSnapshot nginx) { this.nginx = nginx; }
 }

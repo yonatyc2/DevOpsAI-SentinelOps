@@ -8,12 +8,15 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Collects PostgreSQL snapshot via SSH (psql on remote host): activity, sizes, locks.
  */
 @Service
 public class PostgresSnapshotService {
+    private static final Pattern FIRST_INT_PATTERN = Pattern.compile("(-?\\d+)");
 
     private final SshExecutionService sshExecutionService;
     private final PostgresProperties postgresProperties;
@@ -36,13 +39,13 @@ public class PostgresSnapshotService {
                 postgresProperties.getHost(), postgresProperties.getPort(),
                 postgresProperties.getUser(), postgresProperties.getDatabase());
 
-        Optional<SshCommandResult> activeResult = (serverId != null ? sshExecutionService.executeWithServer(serverId, psqlCmd + " -c \"SELECT count(*) FROM pg_stat_activity WHERE state = 'active';\" 2>/dev/null") : sshExecutionService.execute(
-                psqlCmd + " -c \"SELECT count(*) FROM pg_stat_activity WHERE state = 'active';\" 2>/dev/null"));
-        if (activeResult.isPresent() && activeResult.get().isSuccess()) {
-            try {
-                snapshot.setActiveConnections(Integer.parseInt(activeResult.get().getStdout().trim()));
-            } catch (NumberFormatException ignored) {}
-        }
+        // Count sessions on current DB instead of only "active" state.
+        // "active" can be zero while clients are still connected (idle).
+        String connectionsCmd = psqlCmd + " -c \"SELECT count(*) FROM pg_stat_activity WHERE datname = current_database();\" 2>/dev/null";
+        Optional<SshCommandResult> activeResult = serverId != null
+                ? sshExecutionService.executeWithServer(serverId, connectionsCmd)
+                : sshExecutionService.execute(connectionsCmd);
+        parseConnectionCount(activeResult).ifPresent(snapshot::setActiveConnections);
 
         String sizesCmd = psqlCmd + " -c \"SELECT datname, pg_size_pretty(pg_database_size(datname)) FROM pg_database ORDER BY pg_database_size(datname) DESC;\" 2>/dev/null";
         Optional<SshCommandResult> sizesResult = serverId != null ? sshExecutionService.executeWithServer(serverId, sizesCmd) : sshExecutionService.execute(sizesCmd);
@@ -81,5 +84,24 @@ public class PostgresSnapshotService {
             snapshot.setError("Postgres unreachable or psql not available: " + activeResult.get().getStderr().trim());
         }
         return snapshot;
+    }
+
+    private Optional<Integer> parseConnectionCount(Optional<SshCommandResult> result) {
+        if (result.isEmpty() || !result.get().isSuccess()) {
+            return Optional.empty();
+        }
+        String output = result.get().getStdout();
+        if (output == null || output.isBlank()) {
+            return Optional.empty();
+        }
+        Matcher matcher = FIRST_INT_PATTERN.matcher(output);
+        if (!matcher.find()) {
+            return Optional.empty();
+        }
+        try {
+            return Optional.of(Integer.parseInt(matcher.group(1)));
+        } catch (NumberFormatException ignored) {
+            return Optional.empty();
+        }
     }
 }
