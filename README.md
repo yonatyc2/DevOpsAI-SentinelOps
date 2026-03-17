@@ -109,6 +109,26 @@ Tests cover:
 
 To verify the full stack: run `mvn test` in `backend`, then `npm run build` in `frontend`.
 
+## Windows quick controls (start/stop button)
+
+Use the scripts in `scripts/windows` for one-click control:
+
+- `start-sentinelops.cmd` starts backend (`8080`) and frontend (`5557`) if not running.
+- `stop-sentinelops.cmd` stops any process listening on ports `8080` and `5557`.
+- `toggle-sentinelops.cmd` starts when stopped, or stops when already running.
+- `sentinelops-tray.cmd` starts a tray icon with right-click menu (`Start`, `Stop`, `Toggle`, `Exit`).
+- `create-sentinelops-shortcuts.ps1` creates Desktop shortcuts:
+  - `SentinelOps Start`
+  - `SentinelOps Stop`
+  - `SentinelOps Toggle`
+  - `SentinelOps Tray`
+
+Run once:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File "D:\Vibe Coding Project\DEVOPS Agent\scripts\windows\create-sentinelops-shortcuts.ps1"
+```
+
 ## Project layout
 
 ```
